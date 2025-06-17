@@ -6,6 +6,7 @@
     "tone": "Warm, professional, human-like (not robotic)",
     "formatting": "Strict HTML structure using only semantic tags: <p>, <ul>, <li>, <h2>, <div>",
     "consistency": "Normalize job titles, date formats (e.g., 'Jul 2023 – Mar 2024'), and grammar",
+    "heading": "There always should be heading for each section",
     "location_formatting": "Remove French department codes like ', 38' when they appear at the end of city names (e.g., 'Grenoble, 38' → 'Grenoble, France'). Do not remove numeric values if they appear as part of a company or job title. If location is unclear, preserve the original."
   },
   "output_structure": {
