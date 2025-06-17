@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# Exit script if any command fails
+# Exit immediately if any command fails
 set -e
 
-# Install required system packages
+
 apt-get update && apt-get install -y \
+  # Core Playwright & WebKit libraries
   libglib2.0-0 \
   libnss3 \
   libgdk-pixbuf2.0-0 \
@@ -29,15 +30,25 @@ apt-get update && apt-get install -y \
   libegl1 \
   libgles2 \
   libenchant-2-2 \
-  wget \
-  curl \
-  ca-certificates \
+  libgtk-4-1 \
+  libgraphene-1.0-0 \
+  libgstgl-1.0-0 \
+  libgstcodecparsers-1.0-0 \
+  libgstreamer-gl1.0-0 \
+  libgstreamer-plugins-base1.0-0 \
+  libgstreamer-plugins-bad1.0-0 \
+  libmanette-0.2-0 \
+  libpango-1.0-0 \
+  libcairo2 \
   fonts-liberation \
-  xdg-utils
+  xdg-utils \
+  ca-certificates \
+  wget \
+  curl
 
-# Install Python packages
 pip install --upgrade pip
 pip install -r requirements.txt
 
-# Install Playwright browser dependencies
 npx playwright install
+
+
