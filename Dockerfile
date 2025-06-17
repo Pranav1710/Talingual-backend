@@ -14,7 +14,7 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install playwright
-RUN playwright install chromium
+RUN playwright install
 
 EXPOSE 10000
 CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
