@@ -1,22 +1,36 @@
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
+from google.auth.transport.requests import Request
 import os
+from flask import request
+import json
 
 def get_user_google_credentials():
-    token_path = 'token.json'
-    if not os.path.exists(token_path):
-        raise Exception("Google token.json not found. Please run generate_token.py")
-    return Credentials.from_authorized_user_file(token_path, ['https://www.googleapis.com/auth/drive.file'])
+    token_json = request.cookies.get("google_token")
+    if not token_json:
+        raise Exception("Not authenticated")
 
-def upload_docx_to_drive(creds, docx_path):
+    creds = Credentials.from_authorized_user_info(json.loads(token_json))
+
+    if creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+    
+    return creds
+
+
+def upload_docx_to_drive(creds, docx_path, filename="Talingual Resume.docx"):
     service = build('drive', 'v3', credentials=creds)
 
     file_metadata = {
-        'name': 'Talingual Resume',
+        'name': filename,
         'mimeType': 'application/vnd.google-apps.document'
     }
-    media = MediaFileUpload(docx_path, mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+
+    media = MediaFileUpload(
+        docx_path,
+        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
 
     uploaded = service.files().create(
         body=file_metadata,
@@ -25,3 +39,4 @@ def upload_docx_to_drive(creds, docx_path):
     ).execute()
 
     return f"https://docs.google.com/document/d/{uploaded['id']}/edit"
+

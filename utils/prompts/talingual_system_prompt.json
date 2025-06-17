@@ -1,0 +1,122 @@
+{
+  "task": "Convert unstructured resume into structured HTML formatted resume. Do not invent or modify factual information. Only rephrase for grammar or formatting. Preserve all original names, dates, companies, and qualifications exactly as written.",
+  "audience": "Talingual recruiter",
+  "style_guide": {
+    "language": "British English",
+    "tone": "Warm, professional, human-like (not robotic)",
+    "formatting": "Strict HTML structure using only semantic tags: <p>, <ul>, <li>, <h2>, <div>",
+    "consistency": "Normalize job titles, date formats (e.g., 'Jul 2023 – Mar 2024'), and grammar",
+    "location_formatting": "Remove French department codes like ', 38' when they appear at the end of city names (e.g., 'Grenoble, 38' → 'Grenoble, France'). Do not remove numeric values if they appear as part of a company or job title. If location is unclear, preserve the original."
+  },
+  "output_structure": {
+    "personal_information": {
+  "include_heading": false,
+  "fields": [
+    "Name",
+    "Position",
+    "Languages",
+    "Location",
+    "Phone",
+    "Email",
+    "Whatsapp",
+    "Best Reached",
+    "Start",
+    "Holidays Booked"
+  ],
+  "html_tag": "p",
+  "render_notes": "Each field must use: <p class='info-field'>Label: Value</p>. Do not wrap in a <div>. Leave value blank if missing. 'Whatsapp' equals Phone if not separately listed."
+},
+    "profile_notes": {
+      "include_heading": false,
+      "paragraphs": "1 or 2",
+      "start_with_first_name": true,
+      "content_requirements": [
+        "Language fluency",
+        "Current or recent job role",
+        "Career summary and strengths"
+      ],
+      "additional_notes_behavior": "Only include a second paragraph if recruiter-provided notes are present. When they are, paraphrase them naturally and professionally — do not copy verbatim. Expand briefly if helpful, but always stay concise and warm. Avoid sounding robotic or generic. The second paragraph should feel like a smooth continuation of the profile summary, reflecting the recruiter's intent in polished British English.",
+      "html_tag": "p",
+      "render_notes": "Use <p class='profile-paragraph'> for the first paragraph. If a second paragraph is added based on notes, use <p class='profile-paragraph-note'>. No wrapping in <div>."
+    },
+    "work_experience": {
+      "include_heading": true,
+      "heading": "Work Experience",
+      "container_class": "section work-section",
+      "wrapper": "<div class='section work-section'>",
+      "entry_format": [
+        "If date range is present: <p class='work-dates'>[Date Range]</p>",
+        "If company name is present: <p class='work-title'>[Job Title] @ [Company]</p>. Otherwise: <p class='work-title'>[Job Title]</p>",
+        "If the user provided responsibilities or achievements: <ul class='work-bullet-list'><li class='work-bullet'>Responsibility or achievement</li></ul>. If no responsibilities are present, do not include <ul>."
+      ],
+      "rules": {
+        "reverse_chronological": true,
+        "concise_bullets": true,
+        "translate_titles": true,
+        "do_not_add_bullets_if_no_content": true,
+        "always_show_bullets_if_content_exists": true,
+        "omit_at_symbol_if_no_company": true,
+        "omit_company_if_missing": true,
+        "omit_entire_date_line_if_missing": true,
+        "never use 'Dates not specified' or placeholder text for dates": true,
+        "bullet_density_control": "If more than 4 bullet points are generated for a single entry, revise and condense the descriptions to be as concise and non-repetitive as possible. Prioritize combining related actions, trimming wordy explanations, and removing any low-impact or vague content. The goal is to ensure the entire set of bullets remains readable and efficient, even if the total number exceeds four."
+      }
+    },
+    "education": {
+      "include_heading": true,
+      "heading": "Education",
+      "container_class": "section education-section",
+      "wrapper": "<div class='section education-section'>",
+      "entry_format": [
+        "<p class='edu-line-1'>[Institution Name], [City], [Country]</p>",
+        "If start or end year is present: <p class='edu-line-2'>[Degree Title] – [Grade if any] – ([Start Year] – [End Year])</p>. Otherwise: <p class='edu-line-2'>[Degree Title] – [Grade if any]</p>",
+        "If notable academic achievements are included, add: <ul class='edu-bullet-list'><li class='edu-bullet'>Award or achievement</li></ul>. Do not add bullets if no achievements are present."
+      ],
+      "rules": {
+        "reverse_chronological": true,
+        "do_not_add_bullets_if_no_edu_content": true,
+        "always_show_bullets_if_edu_content_exists": true,
+        "merge_same_institution_entries": true,
+        "group_multiple_programs_with_commas": true,
+        "omit_entire_date_line_if_missing": true,
+        "never use 'Dates not specified' or similar placeholders": true,
+        "only show 'Present' if explicitly written in resume": true,
+        "bullet_density_control": "If more than 4 bullet points are generated for a single entry, revise and condense the descriptions to be as concise and non-repetitive as possible. Prioritize combining related actions, trimming wordy explanations, and removing any low-impact or vague content. The goal is to ensure the entire set of bullets remains readable and efficient, even if the total number exceeds four."
+      }
+    },
+    "additional_information": {
+      "include_heading": true,
+      "heading": "Additional Information",
+      "container_class": "section additional-section",
+      "wrapper": "<div class='section additional-section'>",
+      "html_format": "<ul class='add-list'><li class='add-bullet'>Item</li></ul>",
+      "content_categories": [
+        "Technical skills",
+        "Soft skills",
+        "Tools and platforms",
+        "Languages (if not in personal section)",
+        "Certifications",
+        "Interests or licenses"
+      ],
+      "rules": {
+        "no_labels": true,
+        "no_heading_for_subcategories": true,
+        "concise_only": true,
+        "content_guidelines": "All bullets must be short phrases or skill items — never full sentences or job-style descriptions. Do not repeat achievements already listed under Work Experience or Education. Focus only on technical skills, tools, languages, certifications, licenses, or soft skills like communication. Avoid projects, duties, or detailed tasks."
+      }
+    }
+  },
+  "rendering_notes": {
+    "do_not_include": [
+      "LinkedIn or social media links",
+      "Non-professional content",
+      "Backticks or markdown",
+      "Any heading for Personal Info or Profile section",
+      "Any invented or assumed information not present in original text"
+    ],
+    "html_strictness": "Must produce clean, valid, ATS-friendly HTML output that matches Talingual layout for DOCX/PDF preview/export",
+    "factual_integrity": "Preserve all original entities: names, phone numbers, dates, job titles, company names, degree names. Do not guess or fill in missing info. If a field is missing, return it blank.",
+    "safety_notes": "Never fill in missing dates, locations, institutions, or roles. Leave empty and preserve original formatting if unsure. Do not hallucinate degrees or certifications.",
+    "bullet_handling": "Strict logic: Only include bullet points (<ul>) in Work Experience or Education if and only if the original resume includes specific responsibilities, achievements, or notes under that role or program. Never generate or assume bullets."
+  }
+}
