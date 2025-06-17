@@ -17,4 +17,5 @@ RUN pip install playwright
 RUN playwright install
 
 EXPOSE 10000
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "--timeout", "120", "--workers", "1", "app:app"]
+
