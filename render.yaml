@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: talingual-cv-tool-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        value: your-actual-key
