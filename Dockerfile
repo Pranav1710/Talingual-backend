@@ -1,5 +1,7 @@
 FROM python:3.10-slim
 
+ENV ENVIRONMENT=prod
+
 RUN apt-get update && apt-get install -y \
     curl wget gnupg unzip \
     libgtk-3-0 libxss1 libasound2 libnss3 libx11-xcb1 libxcomposite1 \

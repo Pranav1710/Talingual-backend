@@ -3,9 +3,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:5000")
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+MODE = os.getenv("ENVIRONMENT", "dev").lower()
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+BACKEND_URL = os.getenv(f"BACKEND_URL_{MODE.upper()}")
+FRONTEND_URL = os.getenv(f"FRONTEND_URL_{MODE.upper()}")
+GOOGLE_CLIENT_ID = os.getenv(f"GOOGLE_CLIENT_ID_{MODE.upper()}")
+GOOGLE_CLIENT_SECRET = os.getenv(f"GOOGLE_CLIENT_SECRET_{MODE.upper()}")
+
+ENVIRONMENT = MODE  # optional alias
